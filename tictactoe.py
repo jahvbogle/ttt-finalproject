@@ -1,33 +1,65 @@
+import sys
 class TicTacToe:
      def __init__(self):
         self.board = [[" ", " ", " "],
                       [" ", " ", " "],
                       [" ", " ", " "]]
         
-     #TODO Prevent collisions
      def update_user(self, x, y):
-        if not self.board[x][y] == ' ':
-           print("\nInvalid move (User) (Position occupied: '{}' at row={} column={})"
-                 .format(self.board[x][y], x, y))
-        else:
-           self.board[x][y] = 'X'
+        self.board[x][y] = 'X'
         return self.board
      
      def update_cpu(self, x, y):
-        if not self.board[x][y] == ' ':
-           print("\nInvalid move (CPU) (Position occupied: '{}' at row={} column={})"
-                 .format(self.board[x][y], x, y))
-        else:
-           self.board[x][y] = '0'
-        return self.board
+         self.board[x][y] = 'O'
+         return self.board
      
-     #TODO Check if goal state is reached
+     # Check if goal state is reached
      def check_user(self):
-        return not True
+        if ( # Check horizontally
+            (self.board[0][0] == 'X' and self.board[0][1] == 'X' and self.board[0][2]) == 'X' or
+            (self.board[1][0] == 'X' and self.board[1][1] == 'X' and self.board[1][2]) == 'X' or
+            (self.board[2][0] == 'X' and self.board[2][1] == 'X' and self.board[2][2]) == 'X' or
+
+            # Check vertically
+            (self.board[0][0] == 'X' and self.board[1][0] == 'X' and self.board[2][0]) == 'X' or
+            (self.board[0][1] == 'X' and self.board[1][1] == 'X' and self.board[2][1]) == 'X' or
+            (self.board[0][2] == 'X' and self.board[1][2] == 'X' and self.board[2][2]) == 'X' or
+
+            # Check diagonals
+            (self.board[0][0]  == 'X' and self.board[1][1] == 'X' and self.board[2][2] == 'X') or
+            (self.board[0][2]  == 'X' and self.board[1][1] == 'X' and self.board[2][0] == 'X')):
+            print("\nGame Over\nWinner: User")
+            return True
+        else: return not True
      
      def check_cpu(self):
-        return not True
-     
+        if ( # Check horizontally
+            (self.board[0][0] == 'O' and self.board[0][1] == 'O' and self.board[0][2]) == 'O' or
+            (self.board[1][0] == 'O' and self.board[1][1] == 'O' and self.board[1][2]) == 'O' or
+            (self.board[2][0] == 'O' and self.board[2][1] == 'O' and self.board[2][2]) == 'O' or
+
+            # Check vertically
+            (self.board[0][0] == 'O' and self.board[1][0] == 'O' and self.board[2][0]) == 'O' or
+            (self.board[0][1] == 'O' and self.board[1][1] == 'O' and self.board[2][1]) == 'O' or
+            (self.board[0][2] == 'O' and self.board[1][2] == 'O' and self.board[2][2]) == 'O' or
+
+            # Check diagonals
+            (self.board[0][0]  == 'O' and self.board[1][1] == 'O' and self.board[2][2] == 'O') or
+            (self.board[0][2]  == 'O' and self.board[1][1] == 'O' and self.board[2][0] == 'O')):
+            print("\nGame Over\nWinner: CPU")
+            return True
+        else: return not True
+
+            # Check if board is full (Tie)
+     def check_tie(self):
+        if (self.board[0][0] != ' ' and self.board[0][1] != ' ' and self.board[0][2] != ' ' and
+            self.board[1][0] != ' ' and self.board[1][1] != ' ' and self.board[1][2] != ' ' and
+            self.board[2][0] != ' ' and self.board[2][1]!= ' ' and self.board[2][2] != ' '):
+           if self.check_user(): sys.exit()
+           if self.check_cpu(): sys.exit()
+           return True
+        else: return not True
+
      def get_board(self):
         return self.board
      
